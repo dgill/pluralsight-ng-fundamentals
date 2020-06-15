@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http'
 
 import {
   EventsListComponent,
@@ -7,22 +8,42 @@ import {
   EventService,
   EventDetailsComponent,
   CreateEventComponent,
-  EventRouteActivator,
-  EventListResolver
+  EventListResolver,
+  CreateSessionComponent,
+  SessionListComponent,
+  DurationPipe,
+  UpvoteComponent,
+  VoterService,
+  LocationValidator,
+  EventResolver
 } from './events/index'
 
 import {EventsAppComponent} from './events-app.component'
 import {NavBarComponent}  from './nav/navbar.component'
-import { ToastrService } from './common/toastr.service';
+import { 
+  TOASTR_TOKEN, 
+  Toastr, 
+  JQ_TOKEN, 
+  CollapsibleWellComponent,
+  SimpleModalComponent,
+  ModalTriggerDirective
+ } from './common/index';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes'
 import { Error404Component } from './errors/404.component';
 import { AuthService } from './user/auth.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+let toastr:Toastr = window['toastr']
+let jQuery = window['$']
 
 @NgModule({
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   declarations: [
     EventsAppComponent,
@@ -31,20 +52,30 @@ import { AuthService } from './user/auth.service';
     NavBarComponent,
     EventDetailsComponent,
     CreateEventComponent,
-    Error404Component
+    Error404Component,
+    CreateSessionComponent,
+    SessionListComponent,
+    CollapsibleWellComponent,
+    DurationPipe,
+    SimpleModalComponent,
+    ModalTriggerDirective,
+    UpvoteComponent,
+    LocationValidator
   ],
   providers: [
     EventService,
-    ToastrService, 
-    EventRouteActivator,
+    { provide: TOASTR_TOKEN, useValue: toastr }, 
+    { provide: JQ_TOKEN, useValue: jQuery }, 
+    EventResolver,
     EventListResolver,
     {
       provide: 'canDeactivateCreateEvent', 
       useValue: checkDirtyState
     },
-    AuthService
+    AuthService,
+    VoterService
   ],
-  bootstrap: [EventsAppComponent]
+  bootstrap: [EventsAppComponent],
 })
 export class AppModule { }
 

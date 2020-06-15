@@ -1,8 +1,9 @@
-import {Component, OnInit } from '@angular/core'
+import {Component, OnInit, Inject } from '@angular/core'
 import {EventService} from './shared/event.service'
-import { ToastrService } from '../common/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IEvent } from './shared';
+import { TOASTR_TOKEN, Toastr } from '../common/toastr.service'
+import { increaseElementDepthCount } from '@angular/core/src/render3/state';
 
 
 @Component({
@@ -14,7 +15,6 @@ export class EventsListComponent implements OnInit{
     events:IEvent[]
 
     constructor(private eventService:EventService, 
-        private toastr:ToastrService,
         private route:ActivatedRoute) {
         
     }
@@ -23,7 +23,4 @@ export class EventsListComponent implements OnInit{
         this.events = this.route.snapshot.data['events']
     }
 
-    handleThumbnailClickEvent(eventName) {
-        this.toastr.success(eventName);
-    }
 }

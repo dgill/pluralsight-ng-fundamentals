@@ -1,24 +1,35 @@
-import { Component, OnInit } from '@angular/core'
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, Inject } from '@angular/core'
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { TOASTR_TOKEN, Toastr } from '../common/toastr.service';
 
 @Component({
   templateUrl: './profile.component.html',
+  styles: [`
+    em {float: right; color: red; padding-left: 10px; }
+    .error input {background-color: #E3C3C5;}
+    .error ::-webkit-input-placeholder {color: #999;}
+    .error ::-moz-placeholder {color: #999;}
+    .error ::-ms--placeholder {color: #999;}
+  `]
 })
 export class ProfileComponent implements OnInit{
     profileForm:FormGroup
+    private firstName:FormControl
+    private lastName:FormControl
     
-    constructor(private authService:AuthService, private route:Router) {
+    constructor(private authService:AuthService, private route:Router,
+        @Inject(TOASTR_TOKEN) private toastr: Toastr) {
 
     }
 
     ngOnInit(): void {
-        let firstName = new FormControl(this.authService.currentUser.firstName);
-        let lastName = new FormControl(this.authService.currentUser.lastName);
+        this.firstName = new FormControl(this.authService.currentUser.firstName, [Validators.required, Validators.pattern('[a-zA-Z].*')]);
+        this.lastName = new FormControl(this.authService.currentUser.lastName, Validators.required);
         this.profileForm = new FormGroup({
-            firstName: firstName,
-            lastName: lastName
+            firstName: this.firstName,
+            lastName: this.lastName
         })
     }
 
@@ -27,7 +38,25 @@ export class ProfileComponent implements OnInit{
     }
     
     saveProfile(formValues) {
-        this.authService.updateCurrentUser(formValues.firstName, formValues.lastName)
-        this.route.navigate(['events'])
+        if (this.profileForm.valid) {
+            this.authService.updateCurrentUser(formValues.firstName, formValues.lastName)
+            .subscribe(() => {
+                this.toastr.success('Profile saved')
+                this.route.navigate(['events'])
+            })
+        }
+    }
+    
+    logout() {
+        this.authService.logout().subscribe(() => {
+            this.route.navigate(['events'])
+        })
+    }
+
+    validateFirstName() {
+        return this.firstName.valid || this.firstName.untouched
+    }
+    validateLastName() {
+        return this.lastName.valid|| this.lastName.untouched
     }
 }
