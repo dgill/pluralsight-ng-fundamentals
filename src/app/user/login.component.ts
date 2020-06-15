@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
-import { AuthService } from './auth.service';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core'
+import { AuthService } from './auth.service'
+import { Router } from '@angular/router'
 
 @Component({
     templateUrl: './login.component.html',
@@ -12,10 +12,10 @@ import { Router } from '@angular/router';
 export class LoginComponent {
     username
     password
-    mouseoverLogin:boolean
+    mouseoverLogin: boolean
     loginInvalid = false
 
-    constructor(private authService:AuthService, private route:Router) {
+    constructor(private authService: AuthService, private route: Router) {
 
     }
     login(formValues) {
@@ -29,6 +29,6 @@ export class LoginComponent {
     }
 
     cancel() {
-        this.route.navigate(['events']);
+        this.route.navigate(['events'])
     }
 }

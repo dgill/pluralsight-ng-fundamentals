@@ -1,6 +1,6 @@
-import { Input, Component, Output, EventEmitter } from '@angular/core';
-import { ISession } from '..';
-import { AuthService } from 'src/app/user/auth.service';
+import { Input, Component, Output, EventEmitter } from '@angular/core'
+import { ISession } from '..'
+import { AuthService } from 'src/app/user/auth.service'
 
 @Component({
     selector: 'upvote',
@@ -20,15 +20,15 @@ import { AuthService } from 'src/app/user/auth.service';
 })
 
 export class UpvoteComponent {
-    @Input() count:number
+    @Input() count: number
     @Input() set voted(val) {
         this.iconColor = val ? 'red' : 'white'
     }
     @Output() vote = new EventEmitter()
     iconColor: string
 
-    constructor(private authService:AuthService) {
-        
+    constructor(private authService: AuthService) {
+
     }
 
     onClick() {

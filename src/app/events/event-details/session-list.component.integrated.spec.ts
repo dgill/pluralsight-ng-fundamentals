@@ -16,11 +16,11 @@ describe('SessionListComponent', () => {
     debugEl: DebugElement
 
     beforeEach(async(() => {
-        let mockAuthService = {
+        const mockAuthService = {
             isAuthenticated: () => true,
             currentUser: { userName: 'Moi'}
         }
-        let mockVoterService = {
+        const mockVoterService = {
             hasVoted: () => true
         }
 
@@ -55,7 +55,7 @@ describe('SessionListComponent', () => {
             component.filterBy = 'all'
             component.sortBy = 'name'
             component.eventId = 4
-            
+
             component.ngOnChanges()
             fixture.detectChanges()
 

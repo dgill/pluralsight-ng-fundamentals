@@ -1,7 +1,7 @@
-import { Component } from "@angular/core";
-import { EventService } from '../shared/event.service';
-import { ActivatedRoute, Params } from '@angular/router';
-import { IEvent, ISession } from '../shared';
+import { Component } from '@angular/core'
+import { EventService } from '../shared/event.service'
+import { ActivatedRoute, Params } from '@angular/router'
+import { IEvent, ISession } from '../shared'
 
 
 @Component({
@@ -14,13 +14,13 @@ import { IEvent, ISession } from '../shared';
 })
 
 export class EventDetailsComponent {
-    event:IEvent
-    addMode:boolean
-    filterBy: string = 'all'
-    sortBy: string = 'none'
+    event: IEvent
+    addMode: boolean
+    filterBy = 'all'
+    sortBy = 'none'
 
-    constructor(private eventService:EventService, private route:ActivatedRoute) {
-        
+    constructor(private eventService: EventService, private route: ActivatedRoute) {
+
     }
 
     ngOnInit() {
@@ -34,7 +34,7 @@ export class EventDetailsComponent {
         this.addMode = true
     }
 
-    saveNewSession(session:ISession) {
+    saveNewSession(session: ISession) {
         const nextId = Math.max.apply(null, this.event.sessions.map(s => s.id))
         session.id = nextId + 1
         this.event.sessions.push(session)

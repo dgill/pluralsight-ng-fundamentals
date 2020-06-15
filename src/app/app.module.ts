@@ -1,5 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser'
+import { NgModule } from '@angular/core'
 import { HttpClientModule } from '@angular/common/http'
 
 import {
@@ -20,27 +20,27 @@ import {
 
 import {EventsAppComponent} from './events-app.component'
 import {NavBarComponent}  from './nav/navbar.component'
-import { 
-  TOASTR_TOKEN, 
-  Toastr, 
-  JQ_TOKEN, 
+import {
+  TOASTR_TOKEN,
+  Toastr,
+  JQ_TOKEN,
   CollapsibleWellComponent,
   SimpleModalComponent,
   ModalTriggerDirective
- } from './common/index';
-import { RouterModule } from '@angular/router';
+ } from './common/index'
+import { RouterModule, PreloadAllModules } from '@angular/router'
 import { appRoutes } from './routes'
-import { Error404Component } from './errors/404.component';
-import { AuthService } from './user/auth.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Error404Component } from './errors/404.component'
+import { AuthService } from './user/auth.service'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
-let toastr:Toastr = window['toastr']
-let jQuery = window['$']
+const toastr: Toastr = window['toastr']
+const jQuery = window['$']
 
 @NgModule({
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, {preloadingStrategy: PreloadAllModules}),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule
@@ -64,12 +64,12 @@ let jQuery = window['$']
   ],
   providers: [
     EventService,
-    { provide: TOASTR_TOKEN, useValue: toastr }, 
-    { provide: JQ_TOKEN, useValue: jQuery }, 
+    { provide: TOASTR_TOKEN, useValue: toastr },
+    { provide: JQ_TOKEN, useValue: jQuery },
     EventResolver,
     EventListResolver,
     {
-      provide: 'canDeactivateCreateEvent', 
+      provide: 'canDeactivateCreateEvent',
       useValue: checkDirtyState
     },
     AuthService,
@@ -79,8 +79,9 @@ let jQuery = window['$']
 })
 export class AppModule { }
 
-export function checkDirtyState(component:CreateEventComponent) {
-  if (component.isDirty)
-    return window.confirm("Do you really?");
-  return true;
+export function checkDirtyState(component: CreateEventComponent) {
+  if (component.isDirty) {
+    return window.confirm('Do you really?')
+  }
+  return true
 }

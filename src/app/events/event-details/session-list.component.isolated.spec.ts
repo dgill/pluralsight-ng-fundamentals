@@ -1,4 +1,4 @@
-import { SessionListComponent } from "./session-list.component"
+import { SessionListComponent } from './session-list.component'
 import { ISession } from '..'
 
 describe('SessionListComponent', () => {
@@ -10,7 +10,7 @@ describe('SessionListComponent', () => {
     })
 
     describe('ngOnChanges', () => {
-        it('should filter the sessions correctly',() => {
+        it('should filter the sessions correctly', () => {
             component.sessions = <ISession[]> [
                 {name: 'session 1', level: 'intermediate'},
                 {name: 'session 2', level: 'intermediate'},
@@ -25,7 +25,7 @@ describe('SessionListComponent', () => {
             expect(component.visibleSessions.length).toBe(2)
         })
 
-        it('should sort the sessions correctly',() => {
+        it('should sort the sessions correctly', () => {
             component.sessions = <ISession[]> [
                 {name: 'session 3', level: 'intermediate'},
                 {name: 'session 2', level: 'intermediate'},
@@ -38,7 +38,7 @@ describe('SessionListComponent', () => {
             component.ngOnChanges()
 
             expect(component.visibleSessions[2].name).toBe('session 3')
-            
+
         })
     })
 })

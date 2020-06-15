@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Validators, FormControl, FormGroup } from '@angular/forms';
-import { ISession, restrictedWords } from '../shared';
+import { Component, EventEmitter, Output } from '@angular/core'
+import { Validators, FormControl, FormGroup } from '@angular/forms'
+import { ISession, restrictedWords } from '../shared'
 
 @Component({
     selector: 'create-session',
@@ -16,7 +16,7 @@ import { ISession, restrictedWords } from '../shared';
 export class CreateSessionComponent {
     @Output() saveNewSession = new EventEmitter()
     @Output() cancelNewSession = new EventEmitter()
-    newSessionForm:FormGroup
+    newSessionForm: FormGroup
     name: FormControl
     presenter: FormControl
     duration: FormControl
@@ -40,7 +40,7 @@ export class CreateSessionComponent {
     }
 
     saveSession(formValues) {
-        let session:ISession = {
+        const session: ISession = {
             id: undefined,
             name: formValues.name,
             duration: +formValues.duration,
@@ -49,7 +49,7 @@ export class CreateSessionComponent {
             abstract: formValues.abstract,
             voters: []
         }
-        
+
         this.saveNewSession.emit(session)
     }
 
